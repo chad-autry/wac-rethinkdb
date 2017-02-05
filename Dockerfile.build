@@ -13,8 +13,7 @@ RUN \
 
 RUN \
     wget https://download.rethinkdb.com/dist/rethinkdb-$VERSION.tgz && \
-    tar xzf rethinkdb-$VERSION.tgz && \
-    rm rethinkdb-$VERSION.tar
+    tar xzf rethinkdb-$VERSION.tgz
 
 RUN \
     cd rethinkdb-$VERSION && \
