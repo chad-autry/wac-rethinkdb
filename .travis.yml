@@ -9,7 +9,12 @@ env:
   global:
   - GH_REF: github.com/chad-autry/wac-rethinkdb
 script:
-- docker build -t chadautry/wac-rethinkdb:latest .
+- docker build -f Dockerfile.build -t rethinkdb-build .
+-	docker rm -f rethinkdb-build || true
+-	docker create --name rethinkdb-build rethinkdb-build
+-	docker cp rethinkdb-build:/usr/local/bin/rethinkdb .
+-	docker rm rethinkdb-build
+- docker build -f Dockerfile.min -t chadautry/wac-rethinkdb:latest .
 - if [[ ! -z "$TRAVIS_TAG" ]]; then docker tag chadautry/wac-rethinkdb:latest chadautry/wac-rethinkdb:$TRAVIS_TAG ; fi
 after_success:
 - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
